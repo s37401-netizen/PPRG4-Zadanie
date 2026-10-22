@@ -173,7 +173,6 @@ while (game)
 }
 */
 // Zadanie 6
-
 Console.WriteLine("Wpisz imię: ");
 string imie = Console.ReadLine();
 Console.WriteLine("Wpisz Hp: ");
@@ -187,54 +186,79 @@ int zloto = int.Parse(Console.ReadLine()!);
 int tura = 1;
 bool graDziala = true;
 int eksp = 0;
-    
+int wykon = tura - 1;    
+
 Console.WriteLine("=== HELLO ADVENTURER ===");
 Console.WriteLine($"Tura: {tura}");
 Console.WriteLine($"Bohater : {imie}");
 Console.WriteLine($"Zdrowie: {hp} | Złoto: {zloto} | Mikstury: {mikstury}\n");    
-Console.WriteLine("1 - Eksploruj loch");
-Console.WriteLine("2 - Użyj mikstury");
-Console.WriteLine("3 - Odpocznij");
-Console.WriteLine("4 - Pokaż statystyki");
-Console.WriteLine("5 - Zakończ grę");
 
-
-
-while (graDziala == true)
+while (graDziala)
 {
-    int wybor = int.Parse(Console.ReadLine()!);
-
-    switch (wybor)
+    Console.WriteLine("1 - Eksploruj loch");
+    Console.WriteLine("2 - Użyj mikstury");
+    Console.WriteLine("3 - Odpocznij");
+    Console.WriteLine("4 - Pokaż statystyki");
+    Console.WriteLine("5 - Zakończ grę");
+    
+    while (tura > wykon)
     {
-        case 1:
-            zloto += 10;
-            hp -= 8;
-            eksp += 1;
-            Console.WriteLine("Dostałeś 10 złota | -8 zdrowia");
-            tura += 1;
-            break;
-        case 2:
-            hp += 20;
-            mikstury -= 1;
-            Console.WriteLine("Dostałeś 20 zdrowia | -1 mikstura");
-            tura += 1;
-            break;
-        case 3:
-            hp += 5;
-            zloto -= 3;
-            Console.WriteLine("Dostałeś 5 zdrowia | -3 złota");
-            tura += 1;
-            break;
-        case 4:
-            Console.WriteLine($"Zdrowia: {hp}\nZłota: {zloto}\nMikstur: {mikstury}\nEksploracji: {eksp}\n");
-            break;
-        case 5:
-            graDziala = false;
-            break;
-        default:
-            Console.WriteLine("Nieznana opcja");
-            break;
+        int wybor = int.Parse(Console.ReadLine()!);
+        switch (wybor)
+        {
+            case 1:
+                if (hp > 8)
+                {
+                    zloto += 10;
+                    hp -= 8;
+                    eksp += 1;
+                    wykon += 1;
+                    Console.WriteLine("Dostałeś 10 złota | -8 zdrowia");
+                }
+                else
+                {
+                    Console.WriteLine("Przegrałeś");
+                    graDziala = false;
+                }
+                break;
+            case 2:
+                if (mikstury > 0)
+                {
+                    hp += 20;
+                    mikstury -= 1;
+                    wykon += 1;
+                    Console.WriteLine("Dostałeś 20 zdrowia | -1 mikstura");
+                }
+                else
+                {
+                    Console.WriteLine("Nie masz już mikstur");
+                }
+                break;
+            case 3:
+                if (zloto >= 3)
+                {
+                    hp += 5;
+                    zloto -= 3;
+                    wykon += 1;
+                    Console.WriteLine("Dostałeś 5 zdrowia | -3 złota");
+                }
+                else
+                {
+                    Console.WriteLine("Nie masz dostatecznej ilości złota");
+                }
+                break;
+            case 4:
+                Console.WriteLine($"Zdrowia: {hp}\nZłota: {zloto}\nMikstur: {mikstury}\nEksploracji: {eksp}\n");
+                break;
+            case 5:
+                graDziala = false;
+                break;
+            default:
+                Console.WriteLine("Nieznana opcja");
+                break;
+        } 
     }
+    break;
 }
 Console.WriteLine("=== Resultat ===");
 Console.WriteLine($"Zdrowia: {hp}\nZłota: {zloto}\nMikstur: {mikstury}\nEksploracji: {eksp}\n");
